@@ -5,8 +5,8 @@ public class Player {
     private String firstName;
     private String lastName;
 
-    public Player(String firstName, String lastName) {
-        this.codePlayer = (int)Math.floor(Math.random() * 99999);
+    public Player(int codePlayer, String firstName, String lastName) {
+        this.codePlayer = codePlayer;
         this.firstName = firstName;
         this.lastName = lastName;
     }

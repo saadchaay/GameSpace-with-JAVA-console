@@ -1,6 +1,6 @@
 import java.time.LocalTime;
 
-public class Booking {
+public class Session {
 
     private Player player;
     private Post post;
@@ -8,7 +8,7 @@ public class Booking {
     private LocalTime startTime;
     private LocalTime endTime;
 
-    public Booking(Player player, Post post, Game game, LocalTime startTime, LocalTime endTime) {
+    public Session(Player player, Post post, Game game, LocalTime startTime, LocalTime endTime) {
         this.player = player;
         this.post = post;
         this.game = game;

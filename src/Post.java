@@ -1,12 +1,16 @@
+import java.util.ArrayList;
+
 public class Post {
 
     private static int number = 0;
-    private String console;
-    private String display;
+    private String type;
+    private Device[] devices;
+    private ArrayList<Game> games;
 
-    public Post(String console, String display) {
-        this.console = console;
-        this.display = display;
+    public Post(String type, Device[] devices, ArrayList<Game> games) {
+        this.type = type;
+        this.devices = devices;
+        this.games = games;
     }
 
     public static int getNumber() {
@@ -17,20 +21,28 @@ public class Post {
         Post.number = number;
     }
 
-    public String getConsole() {
-        return console;
+    public String getType() {
+        return type;
     }
 
-    public String getDisplay() {
-        return display;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public void setConsole(String console) {
-        this.console = console;
+    public Device[] getDevice() {
+        return devices;
     }
 
-    public void setDisplay(String display) {
-        this.display = display;
+    public void setDevice(Device[] devices) {
+        this.devices = devices;
+    }
+
+    public ArrayList<Game> getGames() {
+        return games;
+    }
+
+    public void setGames(ArrayList<Game> games) {
+        this.games = games;
     }
 
 }
