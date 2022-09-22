@@ -1,11 +1,12 @@
+import java.util.Random;
 public class Player {
 
-    private int codePlayer;
+    private static int codePlayer;
     private String firstName;
     private String lastName;
 
-    public Player(int codePlayer, String firstName, String lastName) {
-        this.codePlayer = codePlayer;
+    public Player(String firstName, String lastName) {
+        this.codePlayer = (int)Math.floor(Math.random() * 99999);
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -33,4 +34,5 @@ public class Player {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }
