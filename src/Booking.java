@@ -5,9 +5,32 @@ public class Booking {
     private Player player;
     private Post post;
     private Game game;
-    private int schedule;
-    private LocalTime start_time;
-    private LocalTime end_time;
+    private LocalTime startTime;
+    private LocalTime endTime;
+
+    public Booking(Player player, Post post, Game game, LocalTime startTime, LocalTime endTime) {
+        this.player = player;
+        this.post = post;
+        this.game = game;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
 
     public Game getGame() {
         return game;

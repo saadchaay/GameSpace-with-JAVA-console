@@ -4,6 +4,11 @@ public class Post {
     private String console;
     private String display;
 
+    public Post(String console, String display) {
+        this.console = console;
+        this.display = display;
+    }
+
     public static int getNumber() {
         return number;
     }
