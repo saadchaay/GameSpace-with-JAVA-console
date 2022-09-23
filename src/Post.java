@@ -3,12 +3,10 @@ import java.util.ArrayList;
 public class Post {
 
     private static int number = 0;
-    private String type;
     private Device[] devices;
     private ArrayList<Game> games;
 
-    public Post(String type, Device[] devices, ArrayList<Game> games) {
-        this.type = type;
+    public Post(Device[] devices, ArrayList<Game> games) {
         this.devices = devices;
         this.games = games;
     }
@@ -19,14 +17,6 @@ public class Post {
 
     public static void setNumber(int number) {
         Post.number = number;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public Device[] getDevice() {

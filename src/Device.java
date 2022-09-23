@@ -1,11 +1,10 @@
 public class Device {
 
     private String name ;
-    private int qty;
+    private static int qty = 0;
 
-    public Device(String name, int qty) {
+    public Device(String name) {
         this.name = name;
-        this.qty = qty;
     }
 
     public String getName() {
