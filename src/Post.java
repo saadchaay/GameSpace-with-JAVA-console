@@ -1,22 +1,32 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Post {
 
-    private static int number = 0;
+    private static int c = 0;
+    private int number;
     private Device[] devices;
     private ArrayList<Game> games;
+    private boolean status ;
 
     public Post(Device[] devices, ArrayList<Game> games) {
+        this.number = c;
         this.devices = devices;
         this.games = games;
+        this.status = true;
+        ++c;
     }
 
-    public static int getNumber() {
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public int getNumber() {
         return number;
-    }
-
-    public static void setNumber(int number) {
-        Post.number = number;
     }
 
     public Device[] getDevice() {
@@ -35,4 +45,20 @@ public class Post {
         this.games = games;
     }
 
+    @Override
+    public String toString() {
+        String games = "";
+        int i=0;
+        for (Game game: this.games){
+            if(i == (this.games.size()-1))
+                games += (i+1) + ": " + game.getName() + ".";
+            else games += (i+1) + ": " + game.getName() + ", ";
+            i++;
+        }
+        String av = isStatus()?"Available":"Not Available";
+        return "\nPost" +
+                " number: " + (number+1) +
+                ", " + av + "\n[ Console: " + devices[0].getName() + " | Screen: " + devices[1].getName() +
+                " ], Games: " + games;
+    }
 }

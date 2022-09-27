@@ -22,4 +22,11 @@ public class Device {
     public void setQty(int qty) {
         this.qty = qty;
     }
+
+    @Override
+    public String toString() {
+        return "Device{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

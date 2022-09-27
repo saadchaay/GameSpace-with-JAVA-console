@@ -14,4 +14,10 @@ public class Game {
         return name;
     }
 
+    @Override
+    public String toString() {
+        return "Game{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }

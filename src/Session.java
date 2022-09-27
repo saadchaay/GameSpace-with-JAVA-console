@@ -55,4 +55,15 @@ public class Session {
     public void setPost(Post post) {
         this.post = post;
     }
+
+    @Override
+    public String toString() {
+        return "Session{" +
+                "\n\tplayer: " + player.getCodePlayer() + ",\tFirst name >> " + player.getFirstName() + ",\tLast name >> " + player.getLastName() +
+                ", \n\tpost: "+ (post.getNumber()+1) +" Console >> " + post.getDevice()[0].getName() + ",\tDisplay >> " + post.getDevice()[1].getName() +
+                ", \n\tgame: " + game.getName() +
+                ", \n\tstartTime: " + startTime +
+                ", \n\tendTime: " + endTime +
+                "\n}";
+    }
 }

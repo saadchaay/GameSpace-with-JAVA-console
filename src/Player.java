@@ -1,7 +1,7 @@
 import java.util.Random;
 public class Player {
 
-    private static int codePlayer;
+    private int codePlayer;
     private String firstName;
     private String lastName;
 
