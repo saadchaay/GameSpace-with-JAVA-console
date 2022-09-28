@@ -57,8 +57,8 @@ public class Post {
         }
         String av = isStatus()?"Available":"Not Available";
         return "\nPost" +
-                " number: " + (number+1) +
-                ", " + av + "\n[ Console: " + devices[0].getName() + " | Screen: " + devices[1].getName() +
-                " ], Games: " + games;
+                " number = " + (number+1) +
+                ", " + av + "\nConsole: " + devices[0].getName() + " | Screen: " + devices[1].getName() +
+                ", Games = " + games;
     }
 }

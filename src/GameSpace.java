@@ -1,8 +1,13 @@
 import java.lang.reflect.Array;
 import java.time.LocalTime;
 import java.util.*;
-import java.io.IOException;
+
+
 public class GameSpace {
+    public static final String RED = "\033[0;31m";     // RED
+    public static final String GREEN = "\033[0;32m";   // GREEN
+    public static final String RESET = "\033[0m";  // Text Reset
+//    public static int total
     static ArrayList<Player> players = new ArrayList<>();
     static ArrayList<Session> sessions = new ArrayList<>();
     static ArrayList<Post> posts = postManagement();
@@ -50,26 +55,14 @@ public class GameSpace {
                 appManage(sessions);
                 break;
             case(2):
-                int i=0;
-                /*for (Post post: posts){
-                    System.out.println("Post n "+ (i+1) +":");
-                    System.out.print("\tGame Console: "+ post.getDevice()[0].getName());
-                    System.out.print(" | Screen: "+ post.getDevice()[1].getName());
-                    System.out.print("\n\nGames available: ");
-                    for (Game game: post.getGames()){
-                        System.out.print(game.getName()+", ");
-                    }
-                    System.out.println();
-                    i++;
-                }*/
-                System.out.println("********* FIN *********");
-                appManage(sessions);
+                if(changeStatus(posts.get(1))){
+                    System.out.println("********* FIN *********");
+                    appManage(sessions);
+                }
+                 else
+                    appManage(sessions);
                 break;
             case(3):
-//                ArrayList<LocalTime> schs = checkSchedule(posts.get(0));
-               /* for (int j=0; j<checkSchedule(posts.get(0)).size(); j++) {
-                    System.out.println("Free time: "+ checkSchedule(posts.get(0)).get(j));
-                }*/
                 appManage(sessions);
                 break;
             case(4):
@@ -85,10 +78,10 @@ public class GameSpace {
     public static void addPlayer(){
         Scanner in = new Scanner(System.in);
         int i=0, codePlayer;
-        System.out.println("\n****  Player Details:  ****");
-        System.out.print("\t\t First name: ");
+        System.out.println("\n****  Player Details:  ****\n");
+        System.out.print("\tFirst name: ");
         String firstName = in.next();
-        System.out.print("\t\t Last name: ");
+        System.out.print("\tLast name: ");
         String lastName = in.next();
         codePlayer = (int)Math.floor(Math.random() * 99999);
         players.add(new Player(codePlayer, firstName, lastName));
@@ -100,10 +93,11 @@ public class GameSpace {
         int duration=0;
         LocalTime t = LocalTime.of(9,00,00);
         double durPrices[][] = {{0.5, 1, 2, 5, 9}, {5, 10, 18, 40, 65}};
-        posts.get(0).setStatus(false);
+
         System.out.println("\n***** ADD NEW SESSION *****");
-        LocalTime schedule = getValidTime(LocalTime.of(13,46,00));
-        System.out.println(schedule);
+//        LocalTime schedule = getValidTime(LocalTime.now());
+        LocalTime schedule = getValidTime(LocalTime.of(10,11,00));
+        System.out.print("\n\nPrices: \n");
         do {
             switch (getPlan()){
                 case(1):
@@ -122,8 +116,12 @@ public class GameSpace {
                     duration = 540;
                     break;
             }
-            System.out.println(!checkAvSchedules(schedule, duration)?"\nFailed, Your plan is not valid, Choose another one! ":"");
+            System.out.println(!checkAvSchedules(schedule, duration)?(RED+"\nFailed, Your plan is not valid, Choose another one! "+RESET):"");
         }while(!checkAvSchedules(schedule, duration));
+//        for (Post post: posts){
+//            if (changeStatus(post)) ;
+//            else break;
+//        }
         int postNum = getPost();
         System.out.print("\nChoose the game that you wanna play: ");
         int numGame = in.nextInt();
@@ -143,7 +141,7 @@ public class GameSpace {
             Player newPlayer = players.get(players.size()-1);
             sessions.add(new Session(newPlayer, newPost, newGame, schedule, schedule.plusMinutes(duration)));
             newPost.setStatus(!newPost.isStatus());
-            System.out.println("\n\t   ## Create new Session successfully.  ##   \n");
+            System.out.println(GREEN+"\n\tCreate new Session successfully.\n"+RESET);
         }
     }
 
@@ -167,21 +165,20 @@ public class GameSpace {
     }
 
     public static boolean checkAvSchedules(LocalTime s, int d){
-        if( s.plusMinutes(d).compareTo(LocalTime.of(20,00,00)) > 0
-            || s.plusMinutes(d).compareTo(LocalTime.of(12,00,00)) > 0)
+        LocalTime e = s.plusMinutes(d);
+        if( e.isAfter(LocalTime.of(20,00,00)) ||
+                (e.isAfter(LocalTime.of(12,00,00))
+                        && e.isBefore(LocalTime.of(14,00,00))) )
             return false;
-        return true;
-        /*if( (s.plusMinutes(d).isAfter(LocalTime.of(12,00,00))
-                && s.isBefore(LocalTime.of(9,00,00)))
-                || (s.plusMinutes(d).isAfter(LocalTime.of(20,00,00))
-                && s.isBefore(LocalTime.of(14,00,00))) )
-            return false;
-        return true;*/
+        else return true;
     }
 
     public static int getPlan(){
         Scanner in = new Scanner(System.in);
-        System.out.print("\n\t1: [30min, Price: 5DH]  \n\t2: [1h, Price: 10DH] \n\t3: [2h, Price: 18DH]  \n\t4: [5h, Price: 40]  \n\t5: [all Day, Price: 65DH]");
+        String durPrices[][] = {{"30 Min", "One hour", "Two hours", "Five hours", "All the day"}, {"5", "10", "18", "40", "65"}};
+        for (int i=0; i<durPrices[0].length; i++){
+            System.out.print("\n\t" + (i+1) +": \t" + durPrices[0][i] +", Price: "+ durPrices[1][i] +"DH;");
+        }
         System.out.print("\n\nWhat's Your plan: ");
         int plan = in.nextInt();
         return plan;
@@ -211,9 +208,33 @@ public class GameSpace {
             Player p = players.get(players.size()-1);
             Session newOne = new Session(p,posts.get(numPost-1), g, start, end);
             sessions.add(newOne);
-            System.out.println("\n\t    ## Create new Session in the waiting list. ##     \n");
+            System.out.println(GREEN+"\n\t ^_^ Create new Session in the waiting list. \n"+RESET);
         }else
-            System.out.println("\nYour schedule is not available for today !!");
-
+            System.out.println(RED+"\n -_- Your schedule is not available for today !!"+RESET);
     }
+
+    public static boolean changeStatus(Post p){
+        LocalTime timeNow = LocalTime.now();
+        if(sessions.size() > 0){
+            Session lastSession = sessions.get(0).getLastSessionByPost(sessions,p);
+            if(lastSession == null){
+                System.out.println("There's no session in this Post");
+                if(!p.isStatus()){
+                    posts.get(p.getNumber()).setStatus(true);
+                }
+            }else if(timeNow.isAfter(lastSession.getEndTime())){
+                posts.get(p.getNumber()).setStatus(true);
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*public static double calculatePrice(){
+        double total = 0;
+
+
+    }*/
+
 }

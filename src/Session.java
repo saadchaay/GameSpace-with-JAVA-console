@@ -1,4 +1,5 @@
-import java.time.LocalTime;
+import java.time.*;
+import java.util.*;
 
 public class Session {
 
@@ -56,6 +57,16 @@ public class Session {
         this.post = post;
     }
 
+    public static Session getLastSessionByPost(ArrayList<Session> sessions, Post p) {
+        ArrayList<Session> tmpSession = new ArrayList<>();
+        for (int i=0; i<sessions.size(); i++){
+            if(sessions.get(i).getPost().getNumber() == p.getNumber()){
+                tmpSession.add(sessions.get(i));
+            }
+        }
+        return tmpSession.size()>0 ? tmpSession.get(tmpSession.size()-1):null;
+    }
+
     @Override
     public String toString() {
         return "Session{" +
@@ -66,4 +77,5 @@ public class Session {
                 ", \n\tendTime: " + endTime +
                 "\n}";
     }
+
 }
